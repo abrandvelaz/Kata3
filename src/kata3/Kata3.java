@@ -15,7 +15,18 @@ public class Kata3 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Histograma<String>histogram = new Histograma<>();
+        
+        histogram.increment("gmail.com");
+        histogram.increment("ulpgc.es");
+        histogram.increment("ulpgc.es");
+        histogram.increment("dis.ulpgc.es");
+        histogram.increment("ulpgc.es");
+        histogram.increment("gmail.com");
+        
+        HistogramDisplay hist = new HistogramDisplay(histogram);
+        hist.execute();        
+        
     }
     
 }
