@@ -11,6 +11,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 
 /**
@@ -18,9 +19,11 @@ import org.jfree.ui.ApplicationFrame;
  * @author Alber
  */
 public class HistogramDisplay extends ApplicationFrame {
-  
-    public HistogramDisplay(String title) {
+    private final Histograma<String>histogram;
+    
+    public HistogramDisplay(Histograma histogram) {
         super("Histograma");
+        this.histogram = histogram;
         this.setContentPane(createPanel());
         this.pack();
     }
@@ -35,20 +38,20 @@ public class HistogramDisplay extends ApplicationFrame {
         return chartPanel;
     }
     
-    private JFreeChart createChart(DefaultCategoryDataSet dataSet){
+    private JFreeChart createChart(DefaultCategoryDataset dataSet){
         JFreeChart chart = ChartFactory.createBarChart("Histograma JFreeChart", 
                                                         "Dominio email",
                                                         "Nº de emails",
-                                                        dataset, PlotOrientation.VERTICAL, false, false,
+                                                        dataSet, PlotOrientation.VERTICAL, false, false,
                                                         rootPaneCheckingEnabled);
         return chart;
         }
     
-    private DefaultCategoryDataSet createDataSet(){
-        DefaultCategoryDataSet dataSet = new DefaultCategoryDataSet();
-        dataSet.addValue(300,"","ulpgc.es");
-        dataSet.addValue(400,"","ulpgc.es");
-        dataSet.addValue(200,"","ulpgc.es");
+    private DefaultCategoryDataset createDataSet(){
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        for(String key:histogram.keySet()){
+            dataSet.addValue(histogram.get(key),"",key);
+        }
         return dataSet;
     }
 }
